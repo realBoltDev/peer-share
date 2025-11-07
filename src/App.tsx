@@ -1,38 +1,21 @@
-import HeroSection from '@/components/shadcn-studio/blocks/hero-section-01/hero-section-01'
-import Header from '@/components/shadcn-studio/blocks/hero-section-01/header'
-import type { NavigationSection } from '@/components/shadcn-studio/blocks/hero-section-01/header'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import BaseLayout from '@/layouts/BaseLayout'
+import Home from '@/pages/Home'
+import Share from '@/pages/Share'
+import Receive from '@/pages/Connect'
 
-const navigationData: NavigationSection[] = [
-  {
-    title: 'Home',
-    href: '#'
-  },
-  {
-    title: 'Products',
-    href: '#'
-  },
-  {
-    title: 'About Us',
-    href: '#'
-  },
-  {
-    title: 'Contacts',
-    href: '#'
-  }
-]
-
-const App = () => {
+export default function App() {
   return (
-    <div className='relative'>
-      {/* Header Section */}
-      <Header navigationData={navigationData} />
-
-      {/* Main Content */}
-      <main className='flex flex-col'>
-        <HeroSection />
-      </main>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<BaseLayout />}>
+          <Route path='/' element={<Home />} />
+          <Route path='/share' element={<Share />} />
+          <Route path='/connect' element={<Share />} />
+          <Route path='/about' element={<Share />} />
+          <Route path='/receive/:sessionId' element={<Receive />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
-
-export default App
