@@ -1,17 +1,29 @@
+import { AppShell } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { Outlet } from 'react-router-dom';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import { Header } from '@/components/Header/Header';
+import { Sidebar } from '@/components/Sidebar/Sidebar';
 
-import { navigationData } from '@/data/navigation';
+export function BaseLayout() {
+  const [opened, { toggle }] = useDisclosure();
 
-export default function BaseLayout() {
   return (
-    <div className='min-h-screen flex flex-col'>
-      <Header navigationData={navigationData}/>
-      <main className="flex-1">
+    <AppShell
+      header={{ height: 60 }}
+      navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } }}
+      style={{ height: '100vh' }}
+    >
+      <AppShell.Header>
+        <Header opened={opened} toggle={toggle} />
+      </AppShell.Header>
+
+      <AppShell.Navbar p="md">
+        <Sidebar />
+      </AppShell.Navbar>
+
+      <AppShell.Main style={{ height: '100%', overflow: 'hidden' }}>
         <Outlet />
-      </main>
-      <Footer />
-    </div>
-  )
+      </AppShell.Main>
+    </AppShell>
+  );
 }
