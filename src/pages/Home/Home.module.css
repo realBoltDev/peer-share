@@ -1,0 +1,115 @@
+.header {
+  background-color: #2e2e2e;
+  height: 70px;
+  margin-inline: clamp(8px, 4vw, 64px);
+  padding-inline: var(--mantine-spacing-md);
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+/* Reduce margin on smaller screens - changed to match Mantine's sm breakpoint */
+@media (max-width: 767.9px) {
+  .header {
+    margin-inline: clamp(4px, 2vw, 32px);
+  }
+}
+
+.link {
+  display: inline-block;
+  position: relative;
+  height: 100%;
+  padding: 0;
+  margin-left: var(--mantine-spacing-md);
+  margin-right: var(--mantine-spacing-md);
+  text-decoration: none;
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  font-weight: 500;
+  font-size: var(--mantine-font-size-md);
+  transition: color 0.3s ease;
+  line-height: 70px; /* Match header height for vertical centering */
+}
+
+/* Mobile styles for drawer links */
+@media (max-width: 767.9px) {
+  .link {
+    display: block;
+    height: 42px;
+    width: 100%;
+    border-radius: var(--mantine-radius-md);
+    margin-bottom: 2px;
+    transition: background-color 0.2s ease;
+    line-height: 42px; /* Match mobile height */
+    padding-left: var(--mantine-spacing-md);
+    padding-right: var(--mantine-spacing-md);
+  }
+}
+
+.linkActive::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--mantine-color-blue-5);
+  border-radius: 2px;
+  opacity: 0;
+  animation: fadeInLine 0.2s ease-in-out 0.1s forwards;
+}
+
+@keyframes fadeInLine {
+  from {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+/* Hide the active indicator in mobile drawer */
+@media (max-width: 767.9px) {
+  .linkActive::after {
+    display: none;
+  }
+  
+  .linkActive {
+    background-color: light-dark(var(--mantine-color-blue-0), var(--mantine-color-blue-9));
+    color: var(--mantine-color-blue-6);
+  }
+}
+
+/* Desktop hover - only change text color to blue */
+@media (min-width: 768px) {
+  .link:hover {
+    color: #66c0f4;
+  }
+}
+
+/* Mobile hover - keep background color change */
+@media (max-width: 767.9px) {
+  .link:hover {
+    background-color: #42A5F5;
+  }
+}
+
+.subLink {
+  width: 100%;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
+  border-radius: var(--mantine-radius-md);
+  transition: background-color 0.2s ease;
+}
+
+.subLink:hover {
+  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
+}
+
+.dropdownFooter {
+  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
+  margin: calc(var(--mantine-spacing-md) * -1);
+  margin-top: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-md) calc(var(--mantine-spacing-md) * 2);
+  padding-bottom: var(--mantine-spacing-xl);
+  border-top: 1px solid light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-5));
+}
