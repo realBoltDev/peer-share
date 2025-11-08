@@ -5,3 +5,6 @@
 - Added react router support for pages
 - Refactored types and data
 - Added icons in navbar
+
+### Nov 8, 2025
+- Migrated the whole project to Mantine from ShadCN as things kept breaking for me
