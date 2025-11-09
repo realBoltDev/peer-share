@@ -73,7 +73,7 @@
   .linkActive::after {
     display: none;
   }
-  
+
   .linkActive {
     background-color: light-dark(var(--mantine-color-blue-0), var(--mantine-color-blue-9));
     color: var(--mantine-color-blue-6);
