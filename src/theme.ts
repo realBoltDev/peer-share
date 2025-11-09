@@ -34,7 +34,7 @@ export const theme = createTheme({
   white: '#ffffff',
   black: '#000000',
 
-  fontFamily: 'Geist, sans-serif',
+  fontFamily: 'Russo One, sans-serif',
   fontFamilyMonospace: 'monospace',
   defaultRadius: 'md',
 
