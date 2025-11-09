@@ -1,46 +1,24 @@
 import { useState } from 'react';
-import {
-  Icon2fa,
-  IconBellRinging,
-  IconDatabaseImport,
-  IconFingerprint,
-  IconKey,
-  IconLogout,
-  IconReceipt2,
-  IconSettings,
-  IconSwitchHorizontal,
-} from '@tabler/icons-react';
-import { Code, Group } from '@mantine/core';
-import { MantineLogo } from '@mantinex/mantine-logo';
+import { NavLink } from 'react-router-dom';
+import { navigationData } from '@/data/navigation';
 import classes from './Sidebar.module.css';
 
-const data = [
-  { link: '', label: 'Notifications', icon: IconBellRinging },
-  { link: '', label: 'Billing', icon: IconReceipt2 },
-  { link: '', label: 'Security', icon: IconFingerprint },
-  { link: '', label: 'SSH Keys', icon: IconKey },
-  { link: '', label: 'Databases', icon: IconDatabaseImport },
-  { link: '', label: 'Authentication', icon: Icon2fa },
-  { link: '', label: 'Other Settings', icon: IconSettings },
-];
-
 export function Sidebar() {
-  const [active, setActive] = useState('Billing');
+  const [active, setActive] = useState('Home');
 
-  const links = data.map((item) => (
-    <a
+  const links = navigationData.map((item) => (
+    <NavLink
       className={classes.link}
       data-active={item.label === active || undefined}
-      href={item.link}
+      to={item.link}
       key={item.label}
       onClick={(event) => {
-        event.preventDefault();
         setActive(item.label);
       }}
     >
       <item.icon className={classes.linkIcon} stroke={1.5} />
       <span>{item.label}</span>
-    </a>
+    </NavLink>
   ));
 
   return (
