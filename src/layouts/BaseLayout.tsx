@@ -21,7 +21,7 @@ export function BaseLayout() {
         <Sidebar />
       </AppShell.Navbar>
 
-      <AppShell.Main style={{ height: '100%', overflow: 'auto' }}>
+      <AppShell.Main>
         <Outlet />
       </AppShell.Main>
     </AppShell>
