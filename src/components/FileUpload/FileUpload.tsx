@@ -1,15 +1,14 @@
 import { Group, Text } from '@mantine/core';
 import { IconUpload } from '@tabler/icons-react';
-import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
+import { Dropzone, FileWithPath } from '@mantine/dropzone';
 import classes from './FileUpload.module.css';
 
-export function FileUpload({ dropDisabled }: { dropDisabled: boolean }) {
+export function FileUpload({ onFilesAdd, dropDisabled }: { onFilesAdd: (files: FileWithPath[]) => void, dropDisabled: boolean }) {
   return (
     <Dropzone
       className={`${classes.dropzone} ${dropDisabled ? classes.disabled : classes.enabled}`}
       disabled={dropDisabled}
-      onDrop={(files) => console.log('accepted files', files)}
-      accept={IMAGE_MIME_TYPE}
+      onDrop={(files) => onFilesAdd(files)}
       style={{ marginTop: 'var(--mantine-spacing-md)' }}
     >
       <Group justify="center" gap="xl" mih={220} style={{ pointerEvents: 'none' }}>
