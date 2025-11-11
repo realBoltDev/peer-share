@@ -21,3 +21,5 @@
 - Moved client info and connection status in a grid
 - Added file upload dropzone with diabled state handling
 - I've used useState to store data and pass it down in components via props. Maybe I'll switch to zustand later.
+- Added files display table with progress bar and action button. They're dummy and don't work right now.
+- Made proper file size getter function i.e it shows in KB, MB, GB, TB.
