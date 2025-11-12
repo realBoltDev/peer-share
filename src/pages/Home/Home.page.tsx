@@ -3,18 +3,19 @@ import { Paper, Text, useMantineTheme } from "@mantine/core";
 import { StatusPanel } from "@/components/StatusPanel/StatusPanel";
 import { FileUpload } from "@/components/FileUpload/FileUpload";
 import { FilesTable } from "@/components/FilesTable/FilesTable";
+import { IncomingRequestModal } from "@/components/IncomingRequestModal/IncomingRequestModal";
 import { getFileSizeText } from "@/utils/format";
 import { FileProps } from "@/types";
-import classes from './Home.module.css';
 
 export function HomePage() {
   const theme = useMantineTheme();
 
-  const [nickname, setNickname] = useState("BOLT");
   const [peerId, setPeerId] = useState('ABC123');
+  const [nickname, setNickname] = useState('BOLT');
   const [status, setStatus] = useState('waiting');
   const [dropDisabled, setDropDisabled] = useState(false);
   const [fileData, setFileData] = useState<FileProps>([]);
+  const [requestModalOpened, setRequestModalOpened] = useState(false);
 
   function handleFilesAdd(files: File[]) {
     const newFiles = files.map(file => ({
@@ -27,11 +28,19 @@ export function HomePage() {
     setFileData(prev => [...newFiles, ...prev]);
   }
 
+  const handleRequestAccept = () => {
+    setRequestModalOpened(false);
+  };
+
+  const handleRequestDecline = () => {
+    setRequestModalOpened(false);
+  };
+
   return (
     <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', gap: 0 }}>
       <Paper shadow="xs" radius="sm" p="md" bg={theme.colors.dark[6]} mt="md" ml="md" mr="md">
         <Text size="25px" c="white" ta="center">
-          Fast, Private, Peer-to-Peer file sharing.
+          Share files securely. No servers. No limits.
         </Text>
       </Paper>
 
@@ -40,10 +49,16 @@ export function HomePage() {
 
         <FileUpload onFilesAdd={handleFilesAdd} dropDisabled={dropDisabled} />
 
-        <Paper shadow="xs" radius="sm" p="md" bg={theme.colors.dark[5]} mt="md" style={{ flex: 1 }}>
-          <FilesTable data={fileData} />
-        </Paper>
+        <FilesTable data={fileData} />
       </Paper>
+
+      <IncomingRequestModal
+        opened={requestModalOpened}
+        onAccept={handleRequestAccept}
+        onDecline={handleRequestDecline}
+        peerId="XYZ123"
+        nickname="NitrO"
+      />
     </div>
   );
 }
