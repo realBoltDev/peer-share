@@ -26,6 +26,7 @@
 
 ### Nov 11, 2025
 - Added incoming connection request modal on home page
+- Added spinning icon on file upload in files table
 - Added main content for connect page
 - Added status panel on connect page which includes peer id, nickname and connection status
 - Added connection request peer id input and button
