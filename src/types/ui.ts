@@ -1,7 +1,12 @@
 import { Icon } from '@tabler/icons-react';
 
-export type NavigationSection = {
+export interface NavigationSection {
   link: string;
   label: string;
   icon: Icon;
+}
+
+export interface HeaderProps {
+  opened: boolean;
+  toggle: () => void;
 }
