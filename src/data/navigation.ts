@@ -1,4 +1,4 @@
-import type { NavigationSection } from "@/types";
+import { NavigationSection } from "@/types";
 import {
   IconHome,
   IconInfoCircle,
