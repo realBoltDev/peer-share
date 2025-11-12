@@ -1,7 +1,8 @@
 import { Text, Group, Box, Paper, useMantineTheme } from "@mantine/core";
+import { ConnectionStatusProps } from "@/types/statusPanel";
 import classes from './ConnectionStatus.module.css';
 
-export function ConnectionStatus({ status, peerId, nickname }: { status: string, peerId: string, nickname: string }) {
+export function ConnectionStatus({ status, peerId, nickname }: ConnectionStatusProps) {
   const theme = useMantineTheme();
   const statusColor = status === 'connected' ? 'green' : status === 'waiting' ? 'yellow' : 'red';
   const statusText = status === 'connected' ? `Connected to Peer: ${peerId} (${nickname})` : status === 'waiting' ? 'Waiting for connection' : 'Disconnected';
