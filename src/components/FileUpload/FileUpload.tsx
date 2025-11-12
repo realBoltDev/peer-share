@@ -1,9 +1,10 @@
 import { Group, Text } from '@mantine/core';
 import { IconUpload } from '@tabler/icons-react';
-import { Dropzone, FileWithPath } from '@mantine/dropzone';
+import { Dropzone } from '@mantine/dropzone';
+import { FileUploadProps } from '@/types';
 import classes from './FileUpload.module.css';
 
-export function FileUpload({ onFilesAdd, dropDisabled }: { onFilesAdd: (files: FileWithPath[]) => void, dropDisabled: boolean }) {
+export function FileUpload({ onFilesAdd, dropDisabled }: FileUploadProps) {
   return (
     <Dropzone
       className={`${classes.dropzone} ${dropDisabled ? classes.disabled : classes.enabled}`}
