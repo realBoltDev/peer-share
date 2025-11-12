@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Group, Text, TextInput, ActionIcon, Paper, useMantineTheme } from '@mantine/core';
 import { IconEdit, IconCheck } from "@tabler/icons-react";
+import { ClientInfoProps } from "@/types/statusPanel";
 
-export function ClientInfo({ peerId, nickname, setNickname }: { peerId: string, nickname: string, setNickname: (value: string) => void }) {
+export function ClientInfo({ peerId, nickname, setNickname }: ClientInfoProps) {
   const theme = useMantineTheme();
   const [editing, setEditing] = useState(false);
   const [tempName, setTempName] = useState(nickname);
