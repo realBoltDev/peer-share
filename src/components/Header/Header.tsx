@@ -1,10 +1,6 @@
 import { Burger, Group } from '@mantine/core';
 import classes from './Header.module.css';
-
-type HeaderProps = {
-  opened: boolean,
-  toggle: () => void;
-}
+import { HeaderProps } from '@/types';
 
 export function Header({ opened, toggle }: HeaderProps) {
   return (
