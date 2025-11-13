@@ -4,9 +4,20 @@ import classes from './ConnectionStatus.module.css';
 
 export function ConnectionStatus({ status, peerId, nickname }: ConnectionStatusProps) {
   const theme = useMantineTheme();
-  const statusColor = status === 'connected' ? 'green' : status === 'waiting' ? 'yellow' : 'red';
-  const statusText = status === 'connected' ? `Connected to Peer: ${peerId} (${nickname})` : status === 'waiting' ? 'Waiting for connection' : 'Disconnected';
-  const pulseClass = status === 'connected' ? 'pulse-dot-green' : status === 'waiting' ? 'pulse-dot-yellow' : '';
+
+  const statusColor = status === 'connected' ? 'green' :
+    (status === 'waiting' || status === 'connecting') ? 'yellow'
+      : 'red';
+
+  const statusText = status === 'connected' ? `Connected to Peer: ${peerId} (${nickname})` :
+    status === 'waiting' ? 'Waiting for connection' :
+      status === 'connecting' ? `Connecting to Peer: ${peerId} (${nickname})` :
+        status === 'failed' ? 'Failed to connect to peer' :
+          'Disconnected';
+
+  const pulseClass = status === 'connected' ? 'pulse-dot-green' :
+    (status === 'waiting' || status === 'connecting') ? 'pulse-dot-yellow' :
+      '';
 
   return (
     <Paper p="sm" radius="md" bg={theme.colors.dark[5]} h="100%" style={{ display: 'flex', alignItems: 'center' }}>
