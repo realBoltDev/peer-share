@@ -31,3 +31,8 @@
 - Added status panel on connect page which includes peer id, nickname and connection status
 - Added connection request peer id input and button
 - Moved some component function parameter types to types folder
+
+### Nov 12, 2025
+- Completed about page
+- Added more connection status
+- Added about card types
