@@ -1,0 +1,13 @@
+.header {
+  height: 60px;
+  padding-left: var(--mantine-spacing-md);
+  padding-right: var(--mantine-spacing-md);
+  border-bottom: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+}
+
+/* Reduce margin on smaller screens - changed to match Mantine's sm breakpoint */
+@media (max-width: 767.9px) {
+  .header {
+    margin-inline: clamp(4px, 2vw, 32px);
+  }
+}
