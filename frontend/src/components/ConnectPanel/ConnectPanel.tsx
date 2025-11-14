@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Text, TextInput, Button, Group } from "@mantine/core";
 import { IconPlugConnected } from "@tabler/icons-react";
 import { FilesTable } from "../FilesTable/FilesTable";
-import { FileProps } from "../../types";
+import { FileProps } from "@/types";
 
 export function ConnectPanel() {
   const [inputPeerId, setInputPeerId] = useState('');
