@@ -36,3 +36,17 @@
 - Completed about page
 - Added more connection status
 - Added about card types
+
+### Nov 13, 2025
+- Added socket.io client to frontend
+- Added zustand for persistent state management across pages
+- Started working on backend of project with Node.js & Express.js
+- Implemented socket.io server
+- Added redis to store peer info
+- Added random peer id generator function with collision check
+- Added random nickname generator function
+- Setup events for peer id and nickname to generate on page load
+
+### Nov 14, 2025
+- Initially I was using 2 separate repos for frontend and backend. Now I decided to move them into single repo.
+- Spent an hour trying to safely move files. But I think it still got kind of messed up xd.
