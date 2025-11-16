@@ -1,6 +1,7 @@
 import { io, Socket } from 'socket.io-client';
 import { registerInitHandler } from './handlers/registerInitHandler';
 import { registerPeerHandler } from './handlers/registerPeerHandler';
+import { registerConnectionHandler } from './handlers/registerConnectionHandler';
 
 let socket: Socket | null = null;
 
@@ -13,6 +14,7 @@ export function initSocket() {
 
   registerInitHandler(socket);
   registerPeerHandler(socket);
+  registerConnectionHandler(socket);
 
   return socket;
 }
