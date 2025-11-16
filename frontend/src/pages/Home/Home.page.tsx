@@ -7,12 +7,14 @@ import { IncomingRequestModal } from "@/components/IncomingRequestModal/Incoming
 import { getFileSizeText } from "@/utils/format";
 import { FileProps } from "@/types";
 import { usePeerStore } from "@/store/peerStore";
+import { useConnectionStore } from "@/store/connectionStore";
 
 export function HomePage() {
   const theme = useMantineTheme();
 
   const { initSocketConn, peerId, nickname, setNickname, remotePeerId, remoteNickname } = usePeerStore();
-  const [status, setStatus] = useState('waiting');
+  const { sendStatus, sendMessage, setSendStatus, setMode } = useConnectionStore();
+
   const [dropDisabled, setDropDisabled] = useState(false);
   const [fileData, setFileData] = useState<FileProps>([]);
   const [requestModalOpened, setRequestModalOpened] = useState(false);
@@ -38,12 +40,14 @@ export function HomePage() {
 
   useEffect(() => {
     initSocketConn();
+    setMode('send');
+    setSendStatus('idle', 'Ready for connection');
   }, []);
 
   return (
     <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', gap: 0 }}>
       <Paper shadow="xs" radius="sm" p="md" bg={theme.colors.dark[6]} m="md" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-        <StatusPanel status={status} peerId={peerId} nickname={nickname} setNickname={setNickname} remotePeerId={remotePeerId} remoteNickname={remoteNickname} />
+        <StatusPanel peerId={peerId} nickname={nickname} setNickname={setNickname} status={sendStatus} message={sendMessage} remotePeerId={remotePeerId} remoteNickname={remoteNickname} />
 
         <FileUpload onFilesAdd={handleFilesAdd} dropDisabled={dropDisabled} />
 
