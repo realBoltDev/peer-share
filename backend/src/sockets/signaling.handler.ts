@@ -14,7 +14,6 @@ export function registerSignalingHandlers(socket: Socket, io: Server): void {
     await redisClient.hSet(`peer:${peerId}`, { connected: 'false', nickname: nickname, remotePeerId: '', remoteNickname: '', socketId: socket.id });
 
     socket.data.peerId = peerId;
-    socket.data.nickname = nickname;
 
     socket.emit('registered', { peerId: peerId, nickname: nickname });
     console.log(`[INFO] Registered | Peer ID: ${peerId} | Nickname: ${nickname}`);
@@ -25,24 +24,19 @@ export function registerSignalingHandlers(socket: Socket, io: Server): void {
     if (!peerId) return;
 
     await redisClient.hSet(`peer:${peerId}`, { nickname });
-    socket.data.nickname = nickname;
 
     const allKeys = await redisClient.keys('peer:*');
     for (const key of allKeys) {
       const peerData = await redisClient.hGetAll(key);
+
+      if (Object.keys(peerData).length === 0) {
+        return;
+      }
+
       if (peerData.remotePeerId === peerId && peerData.socketId) {
-        io.to(peerData.socketId).emit('updateRemoteNickname', { nickname });
+        io.to(peerData.socketId).emit('update:remoteNickname', { nickname });
         break;
       }
-    }
-  });
-
-  socket.on('disconnect', async (reason) => {
-    console.log(`[INFO] Peer diconnected: ${socket.id}`);
-
-    const peerId = socket.data.peerId;
-    if (peerId) {
-      await redisClient.del(`peer:${peerId}`);
     }
   });
 }
