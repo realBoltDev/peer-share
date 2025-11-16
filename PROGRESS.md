@@ -50,3 +50,16 @@
 ### Nov 14, 2025
 - Initially I was using 2 separate repos for frontend and backend. Now I decided to move them into single repo.
 - Spent an hour trying to safely move files. But I think it still got kind of messed up xd.
+- Refactored socket and event related files
+- Added connection events in server socket
+- Added connection zustand state
+- Added more events in both server and client sockets
+
+### Nov 15, 2025
+- I was busy all day so nothing new added but looked over some code.
+
+### Nov 16, 2025
+- Added an orange pulse dot css class for waiting status
+- Added connect page zustand state for button etc.
+- Used useEffect to set default values for component state
+- Fixed redis code bugs
