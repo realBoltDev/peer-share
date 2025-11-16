@@ -2,22 +2,25 @@ import { Text, Group, Box, Paper, useMantineTheme } from "@mantine/core";
 import { ConnectionStatusProps } from "@/types/statusPanel";
 import classes from './ConnectionStatus.module.css';
 
-export function ConnectionStatus({ status, remotePeerId, remoteNickname }: ConnectionStatusProps) {
+export function ConnectionStatus({ status, message }: ConnectionStatusProps) {
   const theme = useMantineTheme();
 
-  const statusColor = status === 'connected' ? 'green' :
-    (status === 'waiting' || status === 'connecting') ? 'yellow'
-      : 'red';
+  // idle
+  // waiting
+  // connecting
+  // connected
+  // failed
+  // disconnected
 
-  const statusText = status === 'connected' ? `Connected to Peer: ${remotePeerId} (${remoteNickname})` :
-    status === 'waiting' ? 'Waiting for connection' :
-      status === 'connecting' ? `Connecting to Peer: ${remotePeerId} (${remoteNickname})` :
-        status === 'failed' ? 'Failed to connect to peer' :
-          'Disconnected';
+  const statusColor = status === 'idle' ? 'yellow' :
+    (status === 'waiting' || status === 'connecting') ? 'orange' :
+      status === 'connected' ? 'green' :
+        'red';
 
-  const pulseClass = status === 'connected' ? 'pulse-dot-green' :
-    (status === 'waiting' || status === 'connecting') ? 'pulse-dot-yellow' :
-      '';
+  const pulseClass = status === 'idle' ? 'pulse-dot-yellow' :
+    (status === 'waiting' || status === 'connecting') ? 'pulse-dot-orange' :
+      status === 'connected' ? 'pulse-dot-green' :
+        '';
 
   return (
     <Paper p="sm" radius="md" bg={theme.colors.dark[5]} h="100%" style={{ display: 'flex', alignItems: 'center' }}>
@@ -25,14 +28,14 @@ export function ConnectionStatus({ status, remotePeerId, remoteNickname }: Conne
         <Box
           className={classes[pulseClass]}
           style={{
-            width: '10px',
-            height: '10px',
-            borderRadius: '50%',
-            backgroundColor: statusColor === 'green' ? '#22c55e' : statusColor === 'yellow' ? '#eab308' : '#ef4444',
+        width: '10px',
+        height: '10px',
+        borderRadius: '50%',
+        backgroundColor: statusColor === 'green' ? '#22c55e' : statusColor === 'yellow' ? '#eab308' : statusColor === 'orange' ? '#f97316' : '#ef4444',
           }}
         />
         <Text c="white" size="sm">
-          {statusText}
+          {message}
         </Text>
       </Group>
     </Paper>
