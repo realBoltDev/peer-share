@@ -1,19 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Text, TextInput, Button, Group } from "@mantine/core";
 import { IconPlugConnected } from "@tabler/icons-react";
 import { FilesTable } from "../FilesTable/FilesTable";
 import { FileProps } from "@/types";
+import { usePeerStore } from "@/store/peerStore";
+import { useConnectionStore } from "@/store/connectionStore";
+import { useConnectStore } from "@/store/connectStore";
+import { sleep } from "@/utils/common";
 
 export function ConnectPanel() {
   const [inputPeerId, setInputPeerId] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [connected, setConnected] = useState(false);
   const [fileData, setFileData] = useState<FileProps>([]);
 
-  const handleConnect = () => {
+  const { peerId, nickname, socket } = usePeerStore();
+  const { setReceiveStatus } = useConnectionStore();
+  const { loading, setLoading, connected, setConnected } = useConnectStore();
+
+  const handleConnect = async () => {
     setLoading(true);
-    console.log('connect clicked');
+    setReceiveStatus('waiting', `Sending connection request to peer - ${inputPeerId.trim().toUpperCase()}`);
+    await sleep(1500);
+    socket?.emit('connection:request', { from: { peerId: peerId, nickname: nickname }, to: inputPeerId });
   };
+
+  useEffect(() => {
+    setLoading(false);
+    setConnected(false);
+  }, []);
 
   return (
     <>
