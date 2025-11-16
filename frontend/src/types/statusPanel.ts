@@ -5,7 +5,8 @@ export interface ClientInfoProps {
 }
 
 export interface ConnectionStatusProps {
-  status: string;
+  status: string | null;
+  message: string | null;
   remotePeerId: string | null;
   remoteNickname: string | null;
 }
@@ -13,7 +14,8 @@ export interface ConnectionStatusProps {
 export interface StatusPanelProps {
   peerId: string | null;
   nickname: string | null;
-  status: string;
+  status: string | null;
+  message: string | null;
   remotePeerId: string | null;
   remoteNickname: string | null;
   setNickname: (value: string | null) => void;
