@@ -8,7 +8,7 @@ export function registerPeerHandler(socket: Socket) {
     setPeer(peerId, nickname);
   });
 
-  socket.on('updateRemoteNickname', ({ remoteNickname }) => {
+  socket.on('update:remoteNickname', ({ remoteNickname }) => {
     setRemoteNickname(remoteNickname);
   });
 }
