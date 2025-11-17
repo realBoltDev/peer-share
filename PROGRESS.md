@@ -63,3 +63,5 @@
 - Added connect page zustand state for button etc.
 - Used useEffect to set default values for component state
 - Fixed redis code bugs
+- Used slices and single store instead of multiple stores in zustand to make it organized and better
+- Incoming request modal works now and status gets updated on request accept
