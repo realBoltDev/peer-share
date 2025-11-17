@@ -2,12 +2,13 @@ import { useState } from "react";
 import { Group, Text, TextInput, ActionIcon, Paper, useMantineTheme } from '@mantine/core';
 import { IconEdit, IconCheck } from "@tabler/icons-react";
 import { ClientInfoProps } from "@/types/statusPanel";
-import { usePeerStore } from "@/store/peerStore";
+import { useAppStore } from "@/store/appStore";
 
 export function ClientInfo({ peerId, nickname, setNickname }: ClientInfoProps) {
   const theme = useMantineTheme();
 
-  const { socket } = usePeerStore();
+  const socket = useAppStore((s) => s.socket);
+
   const [editing, setEditing] = useState(false);
   const [tempName, setTempName] = useState(nickname);
 
