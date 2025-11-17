@@ -18,7 +18,7 @@ export function registerConnectionHandler(socket: Socket, io: Server) {
     const socketId = targetPeer.socketId;
     if (socketId) {
       io.to(socketId).emit('connection:incoming', { from });
-      socket.emit('connection:requestSent', { message: `Connection request sent to peer - ${to}` });
+      socket.emit('connection:requestSent', { message: `Waiting for response from peer - ${to}` });
     }
   });
 
