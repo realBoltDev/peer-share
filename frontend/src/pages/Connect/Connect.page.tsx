@@ -2,16 +2,27 @@ import { useEffect, useState } from 'react';
 import { Paper, Text, useMantineTheme } from '@mantine/core';
 import { StatusPanel } from '@/components/StatusPanel/StatusPanel';
 import { FilesTable } from '@/components/FilesTable/FilesTable';
+import { FileProps } from '@/types';
 import { ConnectPanel } from '@/components/ConnectPanel/ConnectPanel';
 import { getFileSizeText } from '@/utils/format';
-import { usePeerStore } from '@/store/peerStore';
-import { useConnectionStore } from '@/store/connectionStore';
+import { useAppStore } from '@/store/appStore';
 
 export function ConnectPage() {
   const theme = useMantineTheme();
 
-  const { initSocketConn, peerId, nickname, setNickname, remotePeerId, remoteNickname } = usePeerStore();
-  const { receiveMessage, receiveStatus, setReceiveStatus, setMode } = useConnectionStore();
+  const [fileData, setFileData] = useState<FileProps>([]);
+
+  const peerId = useAppStore((s) => s.peerId);
+  const remotePeerId = useAppStore((s) => s.remotePeerId);
+  const remotePeerConnected = useAppStore((s) => s.remotePeerConnected);
+  const nickname = useAppStore((s) => s.nickname);
+  const remoteNickname = useAppStore((s) => s.remoteNickname);
+  const receiveStatus = useAppStore((s) => s.receiveStatus);
+  const receiveMessage = useAppStore((s) => s.receiveMessage);
+  const initSocketConn = useAppStore((s) => s.initSocketConn);
+  const setMode = useAppStore((s) => s.setMode);
+  const setNickname = useAppStore((s) => s.setNickname);
+  const setReceiveStatus = useAppStore((s) => s.setReceiveStatus);
 
   useEffect(() => {
     initSocketConn();
@@ -26,7 +37,11 @@ export function ConnectPage() {
       </Paper>
 
       <Paper shadow='xs' radius='md' p='md' bg={theme.colors.dark[6]} ml='md' mr='md'>
-        <ConnectPanel />
+        {!remotePeerConnected ? (
+          <ConnectPanel />
+        ) : (
+          <FilesTable data={fileData} />
+        )}
       </Paper>
     </div>
   );
