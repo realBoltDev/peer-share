@@ -6,18 +6,29 @@ import { FilesTable } from "@/components/FilesTable/FilesTable";
 import { IncomingRequestModal } from "@/components/IncomingRequestModal/IncomingRequestModal";
 import { getFileSizeText } from "@/utils/format";
 import { FileProps } from "@/types";
-import { usePeerStore } from "@/store/peerStore";
-import { useConnectionStore } from "@/store/connectionStore";
+import { useAppStore } from "@/store/appStore";
 
 export function HomePage() {
   const theme = useMantineTheme();
 
-  const { initSocketConn, peerId, nickname, setNickname, remotePeerId, remoteNickname } = usePeerStore();
-  const { sendStatus, sendMessage, setSendStatus, setMode } = useConnectionStore();
+  const socket = useAppStore((s) => s.socket);
+  const peerId = useAppStore((s) => s.peerId);
+  const remotePeerId = useAppStore((s) => s.remotePeerId);
+  const nickname = useAppStore((s) => s.nickname);
+  const remoteNickname = useAppStore((s) => s.remoteNickname);
+  const sendStatus = useAppStore((s) => s.sendStatus);
+  const sendMessage = useAppStore((s) => s.sendMessage);
+  const requestModalOpened = useAppStore((s) => s.requestModalOpened);
+  const requestModalPeer = useAppStore((s) => s.requestModalPeer);
+  const requestModalNickname = useAppStore((s) => s.requestModalNickname);
+  const initSocketConn = useAppStore((s) => s.initSocketConn);
+  const setMode = useAppStore((s) => s.setMode);
+  const setNickname = useAppStore((s) => s.setNickname);
+  const setSendStatus = useAppStore((s) => s.setSendStatus);
+  const setRequestModalOpened = useAppStore((s) => s.setRequestModalOpened);
 
   const [dropDisabled, setDropDisabled] = useState(false);
   const [fileData, setFileData] = useState<FileProps>([]);
-  const [requestModalOpened, setRequestModalOpened] = useState(false);
 
   function handleFilesAdd(files: File[]) {
     const newFiles = files.map(file => ({
@@ -30,12 +41,14 @@ export function HomePage() {
     setFileData(prev => [...newFiles, ...prev]);
   }
 
-  const handleRequestAccept = () => {
+  const handleRequestAccept = (remotePeerId: string | null) => {
     setRequestModalOpened(false);
+    socket?.emit('connection:accept', { from: { peerId, nickname }, to: remotePeerId });
   };
 
-  const handleRequestDecline = () => {
+  const handleRequestDecline = (remotePeerId: string | null) => {
     setRequestModalOpened(false);
+    socket?.emit('connection:decline', { from: { peerId, nickname } });
   };
 
   useEffect(() => {
@@ -55,11 +68,11 @@ export function HomePage() {
       </Paper>
 
       <IncomingRequestModal
-        opened={requestModalOpened}
-        onAccept={handleRequestAccept}
-        onDecline={handleRequestDecline}
-        peerId="XYZ123"
-        nickname="NitrO"
+        opened={requestModalOpened ?? false}
+        onAccept={() => handleRequestAccept(requestModalPeer)}
+        onDecline={() => handleRequestDecline(requestModalPeer)}
+        peerId={requestModalPeer ?? ''}
+        nickname={requestModalNickname ?? ''}
       />
     </div>
   );
