@@ -1,8 +1,8 @@
 import { Socket } from 'socket.io-client';
-import { usePeerStore } from '@/store/peerStore';
+import { appStore } from '@/store/appStore';
 
 export function registerPeerHandler(socket: Socket) {
-  const { setPeer, setRemoteNickname } = usePeerStore.getState();
+  const { setPeer, setRemoteNickname } = appStore.getState();
 
   socket.on('registered', ({ peerId, nickname }) => {
     setPeer(peerId, nickname);
