@@ -1,22 +1,24 @@
 import { StateCreator } from 'zustand';
 import { initSocket } from '@/api';
+import { AppState } from '../appStore';
+import { Socket } from 'socket.io-client';
 
 export interface SocketSlice {
-  socket: ReturnType<typeof initSocket> | null;
+  socket: Socket | null;
   initSocketConn: () => void;
 }
 
 export const createSocketSlice: StateCreator<
-  SocketSlice,
+  AppState,
   [],
   [],
   SocketSlice
-> = (set) => ({
+> = (set, get) => ({
   socket: null,
 
   initSocketConn: () => {
-    const socket = initSocket()
-    set({ socket })
+    const socket = initSocket();
+    set({ socket });
   }
 });
 

@@ -1,4 +1,5 @@
 import { StateCreator } from 'zustand';
+import { AppState } from '../appStore';
 
 export interface PeerSlice {
   peerId: string | null;
@@ -14,7 +15,7 @@ export interface PeerSlice {
 }
 
 export const createPeerSlice: StateCreator<
-  PeerSlice,
+  AppState,
   [],
   [],
   PeerSlice

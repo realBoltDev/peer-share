@@ -1,4 +1,5 @@
 import { StateCreator } from 'zustand';
+import { AppState } from '../appStore';
 
 export interface ConnectionSlice {
   mode: string | null;
@@ -7,32 +8,43 @@ export interface ConnectionSlice {
   receiveStatus: string | null;
   receiveMessage: string | null;
   setMode: (mode: string | null) => void;
-  setSendStatus: (status: string | null, message: string | null) => void;
-  setReceiveStatus: (status: string | null, message: string | null) => void;
+  setSendStatus: (status: string | null) => void;
+  setReceiveStatus: (status: string | null) => void;
+  setSendMessage: (message: string | null) => void;
+  setReceiveMessage: (message: string | null) => void;
 }
 
 export const createConnectionSlice: StateCreator<
-  ConnectionSlice,
+  AppState,
   [],
   [],
-  ConnectionSlice> = (set) => ({
-    mode: null,
+  ConnectionSlice
+> = (set) => ({
+  mode: null,
 
-    sendStatus: null,
-    sendMessage: null,
+  sendStatus: null,
+  sendMessage: null,
 
-    receiveStatus: null,
-    receiveMessage: null,
+  receiveStatus: null,
+  receiveMessage: null,
 
-    setMode: (mode) => {
-      set({ mode })
-    },
+  setMode: (mode) => {
+    set({ mode })
+  },
 
-    setSendStatus: (status, message) => {
-      set({ sendStatus: status, sendMessage: message });
-    },
+  setSendStatus: (status) => {
+    set({ sendStatus: status });
+  },
 
-    setReceiveStatus: (status, message) => {
-      set({ receiveStatus: status, receiveMessage: message });
-    }
-  });
+  setReceiveStatus: (status) => {
+    set({ receiveStatus: status });
+  },
+
+  setSendMessage: (message) => {
+    set({ sendMessage: message });
+  },
+
+  setReceiveMessage: (message) => {
+    set({ receiveMessage: message });
+  }
+});

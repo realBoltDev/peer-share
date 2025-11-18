@@ -1,4 +1,5 @@
 import { StateCreator } from 'zustand';
+import { AppState } from '../appStore';
 
 export interface RequestModalSlice {
   requestModalOpened: boolean | null;
@@ -10,23 +11,24 @@ export interface RequestModalSlice {
 }
 
 export const createRequestModalSlice: StateCreator<
-  RequestModalSlice,
+  AppState,
   [],
   [],
-  RequestModalSlice> = (set) => ({
-    requestModalOpened: null,
-    requestModalPeer: null,
-    requestModalNickname: null,
+  RequestModalSlice
+> = (set) => ({
+  requestModalOpened: null,
+  requestModalPeer: null,
+  requestModalNickname: null,
 
-    setRequestModalOpened: (state) => {
-      set({ requestModalOpened: state });
-    },
+  setRequestModalOpened: (state) => {
+    set({ requestModalOpened: state });
+  },
 
-    setRequestModalPeer: (peerId) => {
-      set({ requestModalPeer: peerId });
-    },
+  setRequestModalPeer: (peerId) => {
+    set({ requestModalPeer: peerId });
+  },
 
-    setRequestModalNickname: (remoteNickname) => {
-      set({ requestModalNickname: remoteNickname });
-    }
-  });
+  setRequestModalNickname: (remoteNickname) => {
+    set({ requestModalNickname: remoteNickname });
+  }
+});
