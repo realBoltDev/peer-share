@@ -23,7 +23,7 @@ export function ClientInfo({ peerId, nickname, setNickname }: ClientInfoProps) {
     setNickname(newNickname);
     setEditing(false);
 
-    socket?.emit('update:nickname', { nickname: newNickname });
+    socket?.emit('update:nickname', newNickname);
   };
 
   return (
