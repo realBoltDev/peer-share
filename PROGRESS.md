@@ -65,3 +65,16 @@
 - Fixed redis code bugs
 - Used slices and single store instead of multiple stores in zustand to make it organized and better
 - Incoming request modal works now and status gets updated on request accept
+
+### Nov 17, 2025
+- Added RTCPeerConnection feature for both side
+- I'm using Google Stun server for discovering ICE candidates
+- Added RTCPeerConnection events for handling ice candidates, connection state change and data channel
+- Added signalingSlice for RTCPeerConnection handling
+- Made zustand slices use AppState so that all the slices can call each other
+- Added WebRTCSlice for connection, state and data channel
+- Added events for handling RTCPeerConnection offer, answer and ice candidate
+- Did a lot of restructuring in the codebase
+- Tested the WebRTC connection to send a demo txt file and it worked
+- Connection setup works and both peers are able to talk to each other
+- Nickname now updates live on edit for both peers
