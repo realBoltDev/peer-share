@@ -25,6 +25,7 @@ export function HomePage() {
   const setMode = useAppStore((s) => s.setMode);
   const setNickname = useAppStore((s) => s.setNickname);
   const setSendStatus = useAppStore((s) => s.setSendStatus);
+  const setSendMessage = useAppStore((s) => s.setSendMessage);
   const setRequestModalOpened = useAppStore((s) => s.setRequestModalOpened);
 
   const [dropDisabled, setDropDisabled] = useState(false);
@@ -43,18 +44,19 @@ export function HomePage() {
 
   const handleRequestAccept = (remotePeerId: string | null) => {
     setRequestModalOpened(false);
-    socket?.emit('connection:accept', { from: { peerId, nickname }, to: remotePeerId });
+    socket?.emit('connection:accept', { sender: { peerId: peerId, nickname: nickname }, receiver: { peerId: remotePeerId }});
   };
 
   const handleRequestDecline = (remotePeerId: string | null) => {
     setRequestModalOpened(false);
-    socket?.emit('connection:decline', { from: { peerId, nickname } });
+    socket?.emit('connection:decline', { sender: { peerId: peerId, nickname: nickname }, receiver: { peerId: remotePeerId }});
   };
 
   useEffect(() => {
     initSocketConn();
     setMode('send');
-    setSendStatus('idle', 'Ready for connection');
+    setSendStatus('idle');
+    setSendMessage('Not connected');
   }, []);
 
   return (

@@ -23,11 +23,13 @@ export function ConnectPage() {
   const setMode = useAppStore((s) => s.setMode);
   const setNickname = useAppStore((s) => s.setNickname);
   const setReceiveStatus = useAppStore((s) => s.setReceiveStatus);
+  const setReceiveMessage = useAppStore((s) => s.setReceiveMessage);
 
   useEffect(() => {
     initSocketConn();
     setMode('receive');
-    setReceiveStatus('idle', 'Ready for connection');
+    setReceiveStatus('idle');
+    setReceiveMessage('Ready for connection');
   }, []);
 
   return (
