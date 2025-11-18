@@ -4,6 +4,10 @@ import { ConnectionStatus } from '@/components/ConnectionStatus/ConnectionStatus
 import { StatusPanelProps } from '@/types';
 
 export function StatusPanel({ peerId, nickname, setNickname, status, message, remotePeerId, remoteNickname }: StatusPanelProps) {
+  const displayMessage = status === 'connected' && remoteNickname
+    ? `${message} (${remoteNickname})`
+    : message;
+
   return (
     <Grid gutter="md">
       <Grid.Col span={{ base: 12, sm: 6 }}>
@@ -11,7 +15,7 @@ export function StatusPanel({ peerId, nickname, setNickname, status, message, re
       </Grid.Col>
 
       <Grid.Col span={{ base: 12, sm: 6 }}>
-        <ConnectionStatus status={status} message={message} remotePeerId={remotePeerId} remoteNickname={remoteNickname} />
+        <ConnectionStatus status={status} message={displayMessage} remotePeerId={remotePeerId} remoteNickname={remoteNickname} />
       </Grid.Col>
     </Grid>
   )
