@@ -10,17 +10,19 @@ export function ConnectPanel() {
   const socket = useAppStore((s) => s.socket);
   const peerId = useAppStore((s) => s.peerId);
   const nickname = useAppStore((s) => s.nickname);
-  const remotePeerConnected = useAppStore((s) => s.remotePeerConnected);
   const connectBtnLoading = useAppStore((s) => s.connectBtnLoading);
   const setConnectBtnLoading = useAppStore((s) => s.setConnectBtnLoading);
   const setRemotePeerConnected = useAppStore((s) => s.setRemotePeerConnected);
   const setReceiveStatus = useAppStore((s) => s.setReceiveStatus);
+  const setReceiveMessage = useAppStore((s) => s.setReceiveMessage);
 
   const handleConnect = async () => {
     setConnectBtnLoading(true);
-    setReceiveStatus('waiting', `Sending connection request to peer - ${inputPeerId.trim().toUpperCase()}`);
+    setReceiveStatus('waiting');
+    const targetPeerId = inputPeerId.trim().toUpperCase();
+    setReceiveMessage(`Sending connection request to peer - ${targetPeerId}`);
     await sleep(1500);
-    socket?.emit('connection:request', { from: { peerId, nickname }, to: inputPeerId });
+    socket?.emit('connection:request', { sender: { peerId: targetPeerId }, receiver: { peerId: peerId, nickname: nickname } });
   };
 
   useEffect(() => {
@@ -36,10 +38,11 @@ export function ConnectPanel() {
 
       <TextInput
         disabled={connectBtnLoading}
-        onChange={(e) => setInputPeerId(e.currentTarget.value)}
+        value={inputPeerId}
+        onChange={(e) => setInputPeerId(e.currentTarget.value.toUpperCase())}
         label='Peer ID'
         placeholder="Enter sender's Peer ID"
-        style={{ maxWidth: 500, width: '100%' }}
+        style={{ maxWidth: 500, width: '100%', textTransform: 'uppercase' }}
         mb='sm'
       />
 
