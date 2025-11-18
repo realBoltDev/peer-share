@@ -6,10 +6,13 @@ import { registerConnectionHandler } from './handlers/registerConnectionHandler'
 let socket: Socket | null = null;
 
 export function initSocket() {
-  if (socket) return;
+  if (socket) {
+    return socket;
+  }
 
   socket = io('http://127.0.0.1:3000', {
-    transports: ['websocket']
+    transports: ['websocket'],
+    reconnection: true
   });
 
   registerInitHandler(socket);
