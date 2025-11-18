@@ -1,5 +1,5 @@
 import { StateCreator } from 'zustand';
-import { initSocket } from '@/api';
+import { initSocket } from '@/api/socket';
 import { AppState } from '../appStore';
 import { Socket } from 'socket.io-client';
 
