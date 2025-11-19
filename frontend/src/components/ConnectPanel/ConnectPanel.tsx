@@ -13,16 +13,18 @@ export function ConnectPanel() {
   const connectBtnLoading = useAppStore((s) => s.connectBtnLoading);
   const setConnectBtnLoading = useAppStore((s) => s.setConnectBtnLoading);
   const setRemotePeerConnected = useAppStore((s) => s.setRemotePeerConnected);
-  const setReceiveStatus = useAppStore((s) => s.setReceiveStatus);
-  const setReceiveMessage = useAppStore((s) => s.setReceiveMessage);
+  const setConnStatus = useAppStore((s) => s.setConnStatus);
+  const setConnMessage = useAppStore((s) => s.setConnMessage);
 
   const handleConnect = async () => {
     setConnectBtnLoading(true);
-    setReceiveStatus('waiting');
+    setConnStatus('waiting');
+
     const targetPeerId = inputPeerId.trim().toUpperCase();
-    setReceiveMessage(`Sending connection request to peer - ${targetPeerId}`);
+    setConnMessage(`Sending connection request to peer`);
+
     await sleep(1500);
-    socket?.emit('connection:request', { sender: { peerId: targetPeerId }, receiver: { peerId: peerId, nickname: nickname } });
+    socket?.emit('server:connectionRequest', { sender: { peerId: targetPeerId }, receiver: { peerId: peerId, nickname: nickname } });
   };
 
   useEffect(() => {
