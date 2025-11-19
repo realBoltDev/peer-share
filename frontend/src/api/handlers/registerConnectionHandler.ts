@@ -1,47 +1,57 @@
 import { Socket } from "socket.io-client";
 import { appStore } from "@/store/appStore";
+import { sleep } from "@/utils/common";
 
 export function registerConnectionHandler(socket: Socket) {
   const {
+    setPeerRole,
     setRemotePeerId,
     setRemoteNickname,
     setRemotePeerConnected,
-    setSendStatus,
-    setReceiveStatus,
-    setSendMessage,
-    setReceiveMessage,
+    setConnStatus,
+    setConnMessage,
     setConnectBtnLoading,
-    setRequestModalOpened,
-    setRequestModalPeer,
-    setRequestModalNickname,
     initPeerConnection
   } = appStore.getState();
 
-  socket.on('connection:requestSent', (message) => {
-    setReceiveStatus('waiting');
-    setReceiveMessage(message);
+  //////////////// Receiver Events //////////////////
+
+  socket.on('receiver:requestSent', (message) => {
+    setConnStatus('waiting');
+    setConnMessage(message);
   });
 
-  socket.on('connection:failed', (data) => {
+  socket.on('receiver:connectionFailed', async (data) => {
     console.error('[Connection] Connection failed:', data);
-    setReceiveStatus('failed');
-    setReceiveMessage(data.message);
+    setConnStatus('failed');
+    setConnMessage(data.message);
+
+    await sleep(2000);
+
+    setConnStatus('idle');
+    setConnMessage('Ready for connection');
+
     setConnectBtnLoading(false);
   });
 
-  socket.on('connection:incoming', (receiver) => {
-    setRequestModalPeer(receiver.peerId);
-    setRequestModalNickname(receiver.nickname);
-    setRequestModalOpened(true);
-  });
-
-  socket.on('connection:accepted', (sender) => {
+  socket.on('receiver:requestAccepted', (sender) => {
+    setPeerRole('Receiver');
     setRemotePeerId(sender.peerId);
     setRemoteNickname(sender.nickname);
-    setRemotePeerConnected(true);
-    setReceiveStatus('connected');
-    setReceiveMessage(`Connected to peer - ${sender.peerId}`);
-
     initPeerConnection();
+  });
+
+  socket.on('receiver:requestDeclined', async (sender) => {
+    setRemotePeerId(sender.peerId);
+    setRemoteNickname(sender.nickname);
+    setRemotePeerConnected(false);
+    setConnStatus('failed');
+    setConnMessage(`Connection request declined by peer`);
+
+    await sleep(2000);
+
+    setConnStatus('idle');
+    setConnMessage('Ready for connection');
+    setConnectBtnLoading(false);
   });
 }
