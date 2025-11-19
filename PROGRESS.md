@@ -78,3 +78,13 @@
 - Tested the WebRTC connection to send a demo txt file and it worked
 - Connection setup works and both peers are able to talk to each other
 - Nickname now updates live on edit for both peers
+
+### Nov 18, 2025
+- Modified code to update connection status from state change of RTCPeerConnection
+- If either peer gets disconnected, the other peer is notified
+- When a peer gets disconnected, other peer's connection status is updated in redis now
+- Did some more restructuring with the files
+- Updated event names to make it more clear and understandable
+- Connection status is now displayed same on both home and connect pages
+- Added to show peer role which can be either sender or receiver
+- Added two cloudflare stun servers to increase success rate
