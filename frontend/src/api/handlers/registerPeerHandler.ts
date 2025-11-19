@@ -3,52 +3,42 @@ import { appStore } from '@/store/appStore';
 
 export function registerPeerHandler(socket: Socket) {
   const {
-    remotePeerId,
+    setPeerRole,
     setPeer,
     setRemotePeerId,
     setRemoteNickname,
-    setRemotePeerConnected,
-    setSendStatus,
-    setSendMessage,
-    initPeerConnection
+    initPeerConnection,
+    setRequestModalPeer,
+    setRequestModalNickname,
+    setRequestModalOpened,
+    setDataChannel
   } = appStore.getState();
 
   socket.on('registered', (data) => {
     setPeer(data.peerId, data.nickname);
   });
 
-  socket.on('peer:nicknameUpdated', (data) => {
+  /////////////// Sender Events ////////////////
+
+  socket.on('sender:nicknameUpdated', (data) => {
     setRemoteNickname(data.nickname);
   });
 
-  socket.on('peer:connected', async (data) => {
+  socket.on('sender:requestIncoming', (receiver) => {
+    setRequestModalPeer(receiver.peerId);
+    setRequestModalNickname(receiver.nickname);
+    setRequestModalOpened(true);
+  });
+
+  socket.on('sender:connected', async (data) => {
+    setPeerRole('Sender');
     setRemotePeerId(data.peerId);
     setRemoteNickname(data.nickname);
-    setRemotePeerConnected(true);
-    setSendStatus('connected');
-    setSendMessage(`Connected to peer - ${data.peerId}`);
-
     initPeerConnection();
 
     const pc = appStore.getState().pc!;
-
-    const dataChannel = pc.createDataChannel('fileTransfer', {
-      ordered: true,
-    });
-
-    dataChannel.onopen = () => {
-      console.log('[DataChannel] Data channel opened (offerer)');
-    };
-
-    dataChannel.onclose = () => {
-      console.log('[DataChannel] Data channel closed');
-    };
-
-    dataChannel.onerror = (error) => {
-      console.error('[DataChannel] Error:', error);
-    };
-
-    appStore.getState().setDataChannel(dataChannel);
+    const dataChannel = pc.createDataChannel('fileTransfer', { ordered: true });
+    setupSenderDCHandlers(dataChannel, setDataChannel);
 
     const offer = await pc.createOffer();
     await pc.setLocalDescription(offer);
@@ -67,4 +57,21 @@ export function registerPeerHandler(socket: Socket) {
   socket.on('ice-candidate', async (data) => {
     appStore.getState().processCandidate(data.candidate);
   });
+}
+
+
+function setupSenderDCHandlers(dataChannel: RTCDataChannel, setDataChannel: (dataChannel: RTCDataChannel) => void) {
+  dataChannel.onopen = () => {
+    console.log('[DataChannel] Data channel opened (offerer)');
+  };
+
+  dataChannel.onclose = () => {
+    console.log('[DataChannel] Data channel closed');
+  };
+
+  dataChannel.onerror = (error) => {
+    console.error('[DataChannel] Error:', error);
+  };
+
+  setDataChannel(dataChannel);
 }
