@@ -6,7 +6,6 @@ import { useAppStore } from "@/store/appStore";
 
 export function ClientInfo({ peerId, nickname, setNickname }: ClientInfoProps) {
   const theme = useMantineTheme();
-
   const socket = useAppStore((s) => s.socket);
 
   const [editing, setEditing] = useState(false);
@@ -27,7 +26,7 @@ export function ClientInfo({ peerId, nickname, setNickname }: ClientInfoProps) {
   };
 
   return (
-    <Paper p="sm" radius="md" bg={theme.colors.dark[5]}>
+    <Paper p="sm" radius="md" bg={theme.colors.dark[5]} style={{ height: '100%' }}>
       <Group justify="flex-start" mb={4}>
         <Text size="sm" c="gray.4">
           Your Peer ID:
