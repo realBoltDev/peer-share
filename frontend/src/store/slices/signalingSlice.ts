@@ -18,7 +18,22 @@ export const createSignalingSlice: StateCreator<
   pc: null,
 
   initPeerConnection: () => {
-    if (get().pc) return;
+    const existingPc = get().pc;
+
+    if (existingPc) {
+      const state = existingPc.connectionState;
+      if (state === 'closed' || state === 'failed' || state === 'disconnected') {
+        const { dataChannel } = get();
+        if (dataChannel) {
+          dataChannel.close();
+          get().setDataChannel(null);
+        }
+        existingPc.close();
+        get().setPeerConnection(null);
+      } else if (state === 'connected' || state === 'connecting') {
+        return;
+      }
+    }
 
     const pc = createPeerConnection();
     get().setPeerConnection(pc);
@@ -33,7 +48,6 @@ export const createSignalingSlice: StateCreator<
     }
 
     get().setRemotePeerId(senderPeerId);
-
     await pc.setRemoteDescription(new RTCSessionDescription(offer));
 
     const answer = await pc.createAnswer();
