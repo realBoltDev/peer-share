@@ -2,13 +2,17 @@ import { Group, Text } from '@mantine/core';
 import { IconUpload } from '@tabler/icons-react';
 import { Dropzone } from '@mantine/dropzone';
 import { FileUploadProps } from '@/types';
+import { useAppStore } from '@/store/appStore';
 import classes from './FileUpload.module.css';
 
-export function FileUpload({ onFilesAdd, dropDisabled }: FileUploadProps) {
+export function FileUpload({ onFilesAdd }: FileUploadProps) {
+  const peerRole = useAppStore((s) => s.peerRole);
+  const connStatus = useAppStore((s) => s.connStatus);
+
   return (
     <Dropzone
-      className={`${classes.dropzone} ${dropDisabled ? classes.disabled : classes.enabled}`}
-      disabled={dropDisabled}
+      className={`${classes.dropzone} ${(peerRole === 'Sender' && connStatus === 'connected') ? classes.enabled : classes.disabled}`}
+      disabled={(peerRole === 'Sender' && connStatus === 'connected') ? false : true}
       onDrop={(files) => onFilesAdd(files)}
       style={{ marginTop: 'var(--mantine-spacing-md)' }}
     >
@@ -22,12 +26,12 @@ export function FileUpload({ onFilesAdd, dropDisabled }: FileUploadProps) {
 
         <div>
           <Text size="xl" inline>
-            {dropDisabled ?
-              'Please connect to a peer first' :
-              'Drag files here or click to select files'
+            {(peerRole === 'Sender' && connStatus === 'connected') ?
+              'Drag files here or click to select files' :
+              'Please connect to a peer first'
             }
           </Text>
-          {!dropDisabled && (
+          {(peerRole === 'Sender' && connStatus === 'connected') && (
             <Text size="sm" c="dimmed" inline mt={7}>
               Attach as many files as you like, each file will be sent to other peer
             </Text>
