@@ -31,7 +31,7 @@ export function registerSignalingHandlers(socket: Socket, io: Server): void {
     if (remotePeerId) {
       const remotePeerData = await redisClient.hGetAll(`peer:${remotePeerId}`);
       if (remotePeerData.socketId) {
-        io.to(remotePeerData.socketId).emit('peer:nicknameUpdated', { peerId: peerData, nickname: newNickname });
+        io.to(remotePeerData.socketId).emit('sender:nicknameUpdated', { peerId: peerData, nickname: newNickname });
       }
     }
   });
