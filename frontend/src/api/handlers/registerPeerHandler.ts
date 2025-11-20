@@ -38,6 +38,8 @@ export function registerPeerHandler(socket: Socket) {
 
     const pc = appStore.getState().pc!;
     const dataChannel = pc.createDataChannel('fileTransfer', { ordered: true });
+    dataChannel.binaryType = 'arraybuffer';
+
     setDataChannel(dataChannel);
 
     const offer = await pc.createOffer();
