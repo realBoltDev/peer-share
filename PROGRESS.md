@@ -97,3 +97,12 @@
 - Added IndexedDB to store receiving files in chunks to prevent machine from out of memory
 - Added trigger download utility for user to download on clicking action icon
 - File tranfers work but there are bugs in uploading file (most likely in sending chunks) and speed calculation
+
+### Nov 20, 2025
+- Added .env files for dev and prod enviroment
+- Added logo for the website
+- Made changes on Connect page to show files table even on peer disconnection
+- Previously, chunks received were stored in memory until all of them were received. Now I've updated it to store chunks as blobs in IndexedDB and assemble them at the end. This does take the same amount of RAM as file size. But I did this because I want to use File System Access API in future to stream the blobs in storage when user clicks download. That will help transfer large files without using up all the RAM.
+- Spent a lot of time fixing data chunk problems
+- Fixed the table size jumping to due variable transfer speed
+- Some more bug fixes and code refactor
