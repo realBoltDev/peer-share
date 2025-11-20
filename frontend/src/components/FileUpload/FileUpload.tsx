@@ -28,7 +28,9 @@ export function FileUpload({ onFilesAdd }: FileUploadProps) {
           <Text size="xl" inline>
             {(peerRole === 'Sender' && connStatus === 'connected') ?
               'Drag files here or click to select files' :
-              'Please connect to a peer first'
+              (peerRole === 'Receiver' && connStatus === 'connected') ?
+                'You are connected as a receiver' :
+                'Please connect to a peer first'
             }
           </Text>
           {(peerRole === 'Sender' && connStatus === 'connected') && (
