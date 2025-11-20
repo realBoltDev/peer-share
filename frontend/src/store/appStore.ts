@@ -7,6 +7,7 @@ import { ConnectionSlice, createConnectionSlice } from './slices/connectionSlice
 import { RequestModalSlice, createRequestModalSlice } from './slices/requestModalSlice';
 import { SignalingSlice, createSignalingSlice } from './slices/signalingSlice';
 import { WebRTCSlice, createWebRTCSlice } from './slices/webrtcSlice';
+import { TransferSlice,createTransferSlice } from './slices/transferSlice';
 
 export type AppState =
   SocketSlice &
@@ -15,7 +16,8 @@ export type AppState =
   ConnectionSlice &
   RequestModalSlice &
   SignalingSlice &
-  WebRTCSlice;
+  WebRTCSlice &
+  TransferSlice;
 
 export const appStore = createStore<AppState>()((...a) => ({
   ...createSocketSlice(...a),
@@ -24,7 +26,8 @@ export const appStore = createStore<AppState>()((...a) => ({
   ...createConnectionSlice(...a),
   ...createRequestModalSlice(...a),
   ...createSignalingSlice(...a),
-  ...createWebRTCSlice(...a)
+  ...createWebRTCSlice(...a),
+  ...createTransferSlice(...a)
 }));
 
 export const useAppStore = <T,>(selector: (s: AppState) => T) =>
