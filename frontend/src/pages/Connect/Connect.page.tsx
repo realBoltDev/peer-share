@@ -15,6 +15,7 @@ export function ConnectPage() {
   const connStatus = useAppStore((s) => s.connStatus);
   const connMessage = useAppStore((s) => s.connMessage);
   const setNickname = useAppStore((s) => s.setNickname);
+  const transfers = useAppStore((s) => s.transfers);
 
   return (
     <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', gap: 0 }}>
@@ -22,13 +23,17 @@ export function ConnectPage() {
         <StatusPanel peerId={peerId} nickname={nickname} setNickname={setNickname} status={connStatus} message={connMessage} remotePeerId={remotePeerId} remoteNickname={remoteNickname} />
       </Paper>
 
-      <Paper shadow='xs' radius='md' p='md' bg={theme.colors.dark[6]} ml='md' mr='md'>
-        {!remotePeerConnected ? (
+      {!remotePeerConnected && (
+        <Paper shadow='xs' radius='md' p='md' bg={theme.colors.dark[6]} ml='md' mr='md' mb='md'>
           <ConnectPanel />
-        ) : (
+        </Paper>
+      )}
+
+      {(transfers.length > 0 || remotePeerConnected) && (
+        <Paper shadow='xs' radius='md' p='md' bg={theme.colors.dark[6]} ml='md' mr='md'>
           <FilesTable />
-        )}
-      </Paper>
+        </Paper>
+      )}
     </div>
   );
 }
