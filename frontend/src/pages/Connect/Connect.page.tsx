@@ -1,15 +1,11 @@
-import { useState } from 'react';
 import { Paper, Text, useMantineTheme } from '@mantine/core';
 import { StatusPanel } from '@/components/StatusPanel/StatusPanel';
 import { FilesTable } from '@/components/FilesTable/FilesTable';
-import { FileProps } from '@/types';
 import { ConnectPanel } from '@/components/ConnectPanel/ConnectPanel';
-import { getFileSizeText } from '@/utils/format';
 import { useAppStore } from '@/store/appStore';
 
 export function ConnectPage() {
   const theme = useMantineTheme();
-  const [fileData, setFileData] = useState<FileProps>([]);
 
   const peerId = useAppStore((s) => s.peerId);
   const remotePeerId = useAppStore((s) => s.remotePeerId);
@@ -30,7 +26,7 @@ export function ConnectPage() {
         {!remotePeerConnected ? (
           <ConnectPanel />
         ) : (
-          <FilesTable data={fileData} />
+          <FilesTable />
         )}
       </Paper>
     </div>
