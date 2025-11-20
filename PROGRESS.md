@@ -88,3 +88,12 @@
 - Connection status is now displayed same on both home and connect pages
 - Added to show peer role which can be either sender or receiver
 - Added two cloudflare stun servers to increase success rate
+
+### Nov 19, 2025
+- File metadata is stored in appStore and used to display in files table
+- Added data channel event handler for both sender and receiver
+- Added TransferSlice in appStore which is related to file transfer
+- Added uploadFile function for sending file through data channel to receiver
+- Added IndexedDB to store receiving files in chunks to prevent machine from out of memory
+- Added trigger download utility for user to download on clicking action icon
+- File tranfers work but there are bugs in uploading file (most likely in sending chunks) and speed calculation
