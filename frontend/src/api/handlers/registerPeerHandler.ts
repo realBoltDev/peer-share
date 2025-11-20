@@ -38,7 +38,7 @@ export function registerPeerHandler(socket: Socket) {
 
     const pc = appStore.getState().pc!;
     const dataChannel = pc.createDataChannel('fileTransfer', { ordered: true });
-    setupSenderDCHandlers(dataChannel, setDataChannel);
+    setDataChannel(dataChannel);
 
     const offer = await pc.createOffer();
     await pc.setLocalDescription(offer);
@@ -57,21 +57,4 @@ export function registerPeerHandler(socket: Socket) {
   socket.on('ice-candidate', async (data) => {
     appStore.getState().processCandidate(data.candidate);
   });
-}
-
-
-function setupSenderDCHandlers(dataChannel: RTCDataChannel, setDataChannel: (dataChannel: RTCDataChannel) => void) {
-  dataChannel.onopen = () => {
-    console.log('[DataChannel] Data channel opened (offerer)');
-  };
-
-  dataChannel.onclose = () => {
-    console.log('[DataChannel] Data channel closed');
-  };
-
-  dataChannel.onerror = (error) => {
-    console.error('[DataChannel] Error:', error);
-  };
-
-  setDataChannel(dataChannel);
 }
