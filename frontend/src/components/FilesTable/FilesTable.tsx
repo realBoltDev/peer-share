@@ -56,8 +56,10 @@ export function FilesTable() {
           {getFileSizeText(t.size)}
         </Table.Td>
 
-        <Table.Td>
-          {t.speed > 0 ? `${getFileSizeText(t.speed)}/s` : "-"}
+        <Table.Td style={{ width: 120, minWidth: 120 }}>
+          <Text style={{ fontVariantNumeric: 'tabular-nums' }}>
+            {t.speed > 0 ? `${getFileSizeText(t.speed)}/s` : "-"}
+          </Text>
         </Table.Td>
 
         <Table.Td>
@@ -124,7 +126,7 @@ export function FilesTable() {
             <Table.Tr>
               <Table.Th>File</Table.Th>
               <Table.Th>Size</Table.Th>
-              <Table.Th>Speed</Table.Th>
+              <Table.Th style={{ width: 120, minWidth: 120 }}>Speed</Table.Th>
               <Table.Th>Progress</Table.Th>
               <Table.Th>Status</Table.Th>
             </Table.Tr>
