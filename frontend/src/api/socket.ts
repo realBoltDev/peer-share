@@ -10,7 +10,7 @@ export function initSocket() {
     return socket;
   }
 
-  socket = io('http://127.0.0.1:3000', {
+  socket = io(import.meta.env.VITE_SOCKET_URI, {
     transports: ['websocket'],
     reconnection: true
   });
