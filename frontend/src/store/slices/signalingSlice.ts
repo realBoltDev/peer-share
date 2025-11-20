@@ -1,5 +1,5 @@
 import { StateCreator } from "zustand";
-import { createPeerConnection } from "@/webrtc/createPeerConnection";
+import { createPeerConnection } from "@/webrtc/peerConnection";
 import { AppState } from "../appStore";
 
 export interface SignalingSlice {
