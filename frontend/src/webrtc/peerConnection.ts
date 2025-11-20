@@ -57,7 +57,7 @@ export function createPeerConnection() {
       setConnectionState('connected');
       setRemotePeerConnected(true);
       setConnStatus('connected');
-      setConnMessage(`Connected to peer - ${remotePeerId}!`);
+      setConnMessage(`Connected to peer - ${remotePeerId}`);
     }
 
     if (state === 'disconnected') {
