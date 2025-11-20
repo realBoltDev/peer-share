@@ -1,11 +1,8 @@
-import { useState } from "react";
 import { Paper, Text, useMantineTheme } from "@mantine/core";
 import { StatusPanel } from "@/components/StatusPanel/StatusPanel";
 import { FileUpload } from "@/components/FileUpload/FileUpload";
 import { FilesTable } from "@/components/FilesTable/FilesTable";
 import { IncomingRequestModal } from "@/components/IncomingRequestModal/IncomingRequestModal";
-import { getFileSizeText } from "@/utils/format";
-import { FileProps } from "@/types";
 import { useAppStore } from "@/store/appStore";
 
 export function HomePage() {
@@ -23,28 +20,33 @@ export function HomePage() {
   const requestModalNickname = useAppStore((s) => s.requestModalNickname);
   const setNickname = useAppStore((s) => s.setNickname);
   const setRequestModalOpened = useAppStore((s) => s.setRequestModalOpened);
-
-  const [fileData, setFileData] = useState<FileProps>([]);
+  const addTransfer = useAppStore((s) => s.addTransfer);
 
   function handleFilesAdd(files: File[]) {
-    const newFiles = files.map(file => ({
-      filename: file.name,
-      size: getFileSizeText(file.size),
-      speed: '—',
-      progress: 0,
-      status: 'Pending'
-    }));
-    setFileData(prev => [...newFiles, ...prev]);
+    files.forEach((file) => {
+      const id = crypto.randomUUID();
+
+      addTransfer({
+        id: id,
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        progress: 0,
+        speed: 0,
+        status: "Pending",
+        fileObject: file
+      });
+    });
   }
 
   const handleRequestAccept = (remotePeerId: string | null) => {
     setRequestModalOpened(false);
-    socket?.emit('server:requestAccept', { sender: { peerId: peerId, nickname: nickname }, receiver: { peerId: remotePeerId }});
+    socket?.emit('server:requestAccept', { sender: { peerId: peerId, nickname: nickname }, receiver: { peerId: remotePeerId } });
   };
 
   const handleRequestDecline = (remotePeerId: string | null) => {
     setRequestModalOpened(false);
-    socket?.emit('server:requestDecline', { sender: { peerId: peerId, nickname: nickname }, receiver: { peerId: remotePeerId }});
+    socket?.emit('server:requestDecline', { sender: { peerId: peerId, nickname: nickname }, receiver: { peerId: remotePeerId } });
   };
 
   return (
@@ -54,7 +56,7 @@ export function HomePage() {
 
         <FileUpload onFilesAdd={handleFilesAdd} />
 
-        <FilesTable data={fileData} />
+        <FilesTable />
       </Paper>
 
       <IncomingRequestModal
