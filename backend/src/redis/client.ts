@@ -1,7 +1,13 @@
 import { createClient } from 'redis';
+import { config } from '../config.js';
 
 export const redisClient = createClient({
-  url: 'redis://localhost:6379'
+  username: config.redis.username,
+  password: config.redis.password,
+    socket: {
+        host: config.redis.host,
+        port: config.redis.port
+    }
 });
 
 redisClient.on('connect', () => {
@@ -12,4 +18,6 @@ redisClient.on('error', (err) => {
   console.error(`[ERROR] Redis error: ${err}`);
 })
 
-await redisClient.connect();
+export async function connectRedis() {
+  await redisClient.connect();
+}
