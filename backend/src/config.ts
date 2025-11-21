@@ -16,5 +16,8 @@ export const config = {
   },
   express: {
     port: Number(process.env.EXPRESS_PORT)
+  },
+  socket: {
+    cors_origin: process.env.CORS_ORIGIN
   }
 };
