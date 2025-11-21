@@ -5,14 +5,12 @@ import { registerInitHandler } from './handlers/initHandler.js';
 
 export function initSockets(io: Server) {
   io.on('connection', (socket) => {
-    console.log(`[INFO] Peer connected: ${socket.id}`);
-
     registerInitHandler(socket);
     registerSignalingHandlers(socket, io);
     registerConnectionHandler(socket, io);
   });
 
   io.on('connect_error', (error) => {
-    console.log(`[INFO] Peer connected: ${error}`);
+    console.log(`[INFO] Peer connect error: ${error}`);
   });
 }
