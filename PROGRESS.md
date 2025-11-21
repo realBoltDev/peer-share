@@ -106,3 +106,8 @@
 - Spent a lot of time fixing data chunk problems
 - Fixed the table size jumping to due variable transfer speed
 - Some more bug fixes and code refactor
+
+### Nov 21, 2025
+- Updated socket configurations
+- Spent a lot of time trying to host the site on custom domain with reverse proxy.
+- Initially tried to do with nginx but due to not having root access at Hackclub Nest server, I had to do use Caddy
