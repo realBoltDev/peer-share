@@ -111,3 +111,4 @@
 - Updated socket configurations
 - Spent a lot of time trying to host the site on custom domain with reverse proxy.
 - Initially tried to do with nginx but due to not having root access at Hackclub Nest server, I had to do use Caddy
+- Completed writing README.md and CONTRIBUTING.md
