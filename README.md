@@ -15,8 +15,8 @@ This project was made for [Midnight Hackathon](https://midnight.hackclub.com) or
 * Files do not go through servers
 
 ## Screenshots
-<img width="1902" height="877" alt="image" src="https://github.com/user-attachments/assets/0ec9dbe8-0836-4702-b276-ab18b449f77f" />
-<img width="1915" height="871" alt="image" src="https://github.com/user-attachments/assets/d57907a0-aecf-4667-8f79-d1ac77d2f260" />
+<img src=assets/screenshot1.png alt="SCREENSHOT"/>
+<img src=assets/screenshot2.png alt="SCREENSHOT"/>
 
 ## Usage
 
