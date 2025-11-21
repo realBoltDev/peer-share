@@ -6,7 +6,14 @@ import { app } from './app.js';
 import { connectRedis } from './redis/client.js';
 
 const server = http.createServer(app);
-const io = new Server(server, { cors: { origin: '*' } });
+
+const io = new Server(server, {
+  cors: {
+    origin: config.socket.cors_origin,
+    methods: ["GET", "POST"],
+    credentials: true
+  }
+});
 
 initSockets(io);
 
